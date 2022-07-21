@@ -8,7 +8,7 @@ do
     echo "Hour: $HOURS"
 
 MINUTES=1
-while [[ $MINUTES -lt 60 ]]
+while [ $MINUTES -lt 60 ]
 do
     echo $MINUTES
     ((MINUTES += 1))
