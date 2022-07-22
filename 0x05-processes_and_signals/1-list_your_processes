@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Displays running processes
 
-ps aux
+ps -faux
