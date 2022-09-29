@@ -1,21 +1,17 @@
 #!/usr/bin/env bash
 # script to output where each subdomain points to
-runDig() {
-    subarg=$1
-    urlarg=$2
-
-    dig "$subarg.$urlarg" | grep -A1 'ANSWER SECTION:' | tail -1 | awk -v s="$subarg" 'BEGIN { FS = " " } ; { print "The subdomain " s " is a " $4 " record and points to " $5 }'
+run_dig() {
+    printf "The subdomain %s is a " "$2"
+    dig "$2.$1" | grep -A1 'ANSWER SECTION:' | awk -F' ' '{ printf $4 }'
+    printf " record and points to "
+    dig "$2.$1" | grep -A1 'ANSWER SECTION:' | awk -F' ' '{ printf $5 }'
+    echo ""
 }
 
-allSubs=("www" "lb-01" "web-01" "web-02")
-
-if [ $# -eq 1 ]; then
-    url="$1"
-    for s in "${allSubs[@]}"; do
-        runDig "$s" "$url"
+if [ -z "$2" ]; then
+    for subs in "www" "lb-01" "web-01" "web-02"; do
+        run_dig "$1" "$subs"
     done
-elif [ $# -eq 2 ]; then
-    url="$1"
-    sub="$2"
-    runDig "$sub" "$url"
+else
+    run_dig "$1" "$2"
 fi
