@@ -8,7 +8,7 @@ if __name__ == "__main__":
 
     employeeId = sys.argv[1]
     employee = requests.get("https://jsonplaceholder.typicode.com/users/{}"
-                        .format(employeeId))
+                            .format(employeeId))
 
     name = employee.json().get('name')
 
@@ -26,4 +26,5 @@ if __name__ == "__main__":
           .format(name, completed, totalTasks))
 
     print('\n'.join(["\t " + task.get('title') for task in todo.json()
-          if task.get('employeeId') == int(employeeId) and task.get('completed')]))
+          if task.get('employeeId') == int(employeeId) and
+          task.get('completed')]))
